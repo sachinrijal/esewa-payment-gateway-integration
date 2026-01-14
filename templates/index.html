@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Donate</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #60bb46, #2e7d32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donation-card {
+            background: #ffffff;
+            width: 380px;
+            padding: 32px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .donation-card h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #2e7d32;
+        }
+
+        .donation-card p {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            margin-bottom: 18px;
+        }
+
+        input:focus {
+            border-color: #60bb46;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            background-color: #60bb46;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4fa13b;
+        }
+
+        .note {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="donation-card">
+    <h2>Make a Donation</h2>
+    <p>Your contribution helps support our mission</p>
+
+    <form method="POST" action="{% url 'payment' %}">
+        {% csrf_token %}
+
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            required
+        >
+
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <label for="amount">Donation Amount (NPR)</label>
+        <input
+            type="number"
+            id="amount"
+            name="amount"
+            min="1"
+            placeholder="Enter amount"
+            required
+        >
+
+        <button type="submit">Continue to Payment</button>
+    </form>
+
+    <div class="note">
+        Secure payment powered by eSewa
+    </div>
+</div>
+
+</body>
+</html>
