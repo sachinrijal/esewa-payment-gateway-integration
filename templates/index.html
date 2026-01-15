@@ -87,6 +87,17 @@
 </head>
 <body>
 
+{% if messages %}
+<div class="message-box">
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">
+          {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
 <div class="donation-card">
     <h2>Make a Donation</h2>
     <p>Your contribution helps support our mission</p>

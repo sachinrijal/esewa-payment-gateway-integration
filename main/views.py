@@ -1,5 +1,6 @@
 import base64
 import json
+from pyexpat.errors import messages
 from django.shortcuts import render
 import requests
 
@@ -26,8 +27,12 @@ def home(request):
 
         response = requests.get(url, params=params, timeout=10)
 
-        print("HTTP:", response.status_code)
-        print("RESPONSE:", response.text)
+        status =  response.status
+
+        if status == "success" :
+            messages.success(request , f'payment has been confirmed ')
+        else:
+            messages.error(request,'payment hasnot been confirmed ')
 
 
     return render(request,'index.html')
