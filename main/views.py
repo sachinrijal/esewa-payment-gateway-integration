@@ -1,8 +1,9 @@
 import base64
 import json
-from pyexpat.errors import messages
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import redirect, render
 import requests
+from payment.models import Donation
 
 def home(request):
 
@@ -27,12 +28,18 @@ def home(request):
 
         response = requests.get(url, params=params, timeout=10)
 
-        status =  response.status
+        data = response.json()
 
-        if status == "success" :
+        status = data.get("status")
+
+
+        if status == "COMPLETE" :
             messages.success(request , f'payment has been confirmed ')
+            Donation.objects.filter(transaction_uuid=transaction_uuid).update(status=True)
         else:
             messages.error(request,'payment hasnot been confirmed ')
+
+        return redirect('home')
 
 
     return render(request,'index.html')
